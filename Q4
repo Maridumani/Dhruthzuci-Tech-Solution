@@ -1,0 +1,19 @@
+# Python3 program to find 
+# element that appears once
+ 
+# function which find number
+def singleNumber(nums):
+ 
+# applying the formula.
+    return 2 * sum(set(nums)) - sum(nums)
+ 
+# driver code
+#a = [2, 3, 5, 4, 5, 3, 4]
+a = []
+n = int(input("enter no. of elements : "))
+for i in range (0,n):
+    element = int(input("enter element : "))
+    a.append(element)
+
+print (int(singleNumber(a)))
+

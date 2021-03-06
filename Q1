@@ -1,0 +1,31 @@
+// init project
+var express = require("express");
+var bodyParser = require("body-parser");
+var app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// A route for POST requests sent to `/find_symbols_in_names`
+app.post("/find_symbols_in_names", function (req, res) {
+  if (!req.body.chemicals || !req.body.symbols) {
+    console.log("Received incomplete POST: " + JSON.stringify(req.body));
+    return res.send({ status: "error", message: "missing parameter(s)" });
+  } else {
+    console.log("Received POST: " + JSON.stringify(req.body));
+    var result = [];
+    req.body.chemicals.forEach((chemical) => {
+      req.body.symbols.forEach(
+        (symbol) => (chemical = chemical.replace(symbol, "[" + symbol + "]"))
+      );
+      result.push(chemical);
+    });
+    console.log("Sent result: " + JSON.stringify(result));
+    return res.send(result);
+  }
+});
+
+// Listen on port 8080
+var listener = app.listen(8080, function () {
+  console.log("Listening on port " + listener.address().port);
+});
